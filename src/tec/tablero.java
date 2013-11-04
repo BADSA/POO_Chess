@@ -1,4 +1,4 @@
-package tec.poo;
+package tec;
 
 public class Tablero {
 	private Pieza tLogico[][];

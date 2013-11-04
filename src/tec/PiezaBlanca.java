@@ -1,4 +1,4 @@
-package tec.poo;
+package tec;
 
 public class PiezaBlanca implements Pieza {
 	private String tipoPieza;

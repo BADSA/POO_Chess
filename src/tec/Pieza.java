@@ -1,4 +1,4 @@
-package tec.poo;
+package tec;
 
 interface  Pieza {
 

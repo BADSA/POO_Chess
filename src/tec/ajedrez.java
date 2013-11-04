@@ -1,4 +1,4 @@
-package tec.poo;
+package tec;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
