@@ -1,5 +1,0 @@
-#Informacion general de desarrollo, Pruebas para administracion de codigo Git.
-#
-#
-#
-#
