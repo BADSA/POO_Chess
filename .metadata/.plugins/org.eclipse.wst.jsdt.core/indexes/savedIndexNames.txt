@@ -1,0 +1,7 @@
+INDEX VERSION 1.122+C:\Users\Familia Morera Calvo\Documents\code java\POO_Chess\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2393563997.index
+442525541.index
+210098605.index
+651613744.index
+906053766.index
+3550963686.index
