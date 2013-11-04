@@ -69,14 +69,15 @@ public class ajedrez extends HttpServlet {
 		out.println("<td><font color='#787878'>30</font></td>");
 		out.println("<td bgcolor='#787878'>31</td>");
 		out.println("<td><font color='#787878'>32</font></td>");
-		out.println("</tr>  <tr align='center'>");
+		out.println("</tr>");
+		out.println("<tr align='center'>");
 		out.println("<td><font color='#787878'>33</font></td>");
 		out.println("<td bgcolor='#787878'>34</td>");
 		out.println("<td><font color='#787878'>35</font></td>");
 		out.println("<td bgcolor='#787878'>36</td>");
 		out.println("<td><font color='#787878'>37</font></td>");
 		out.println("<td bgcolor='#787878'>38</td>");
-		out.println("<td><font color='#787878>39</font></td>");
+		out.println("<td><font color='#787878'>39</font></td>");
 		out.println("<td bgcolor='#787878'>40</td>");
 		out.println("</tr>");
 		out.println("<tr align='center'>");
