@@ -1,33 +1,9 @@
 package tec;
 
 public class ExpertoEnAjedrez {
-	String color;
-	String tipo;
-	
-	// Constructor
-	public Piezas(String color, String tipo){
-		this.color=color;
-		this.tipo=tipo;
-	}
-	
-	// Getters y Setters
-	public String getTipo(){
-		return tipo;
-	}
-	
-	public void setTipo(String tipo){
-		this.tipo = tipo;
-	}
-	
-	public String getColor(){
-		return color;
-	}
-	
-	public void setColor(String color){
-		this.color = color;
-	}
-	
-	
+
+	/*
+	 * 
 	// metodo Validar
     public boolean Validar(int x1, int y1, int x2, int y2){
         if (tipo == "peon"){
@@ -66,5 +42,7 @@ public class ExpertoEnAjedrez {
             return true;
     return false;
 }
+    
+    */
     
 }
