@@ -3,6 +3,8 @@ package tec;
 public class PiezaBlanca implements Pieza {
 	private String tipoPieza;
 	private int x,y;
+	private final static String color = "blanco"; 
+	private String rutaImagen;
 	
 	@Override
 	public String getTipoPieza() {
@@ -39,4 +41,11 @@ public class PiezaBlanca implements Pieza {
 		// TODO Auto-generated method stub
 		this.y = y;
 	}
+	public String getColor(){
+		return this.color;
+	}
+	
+	
+	
+	
 }
