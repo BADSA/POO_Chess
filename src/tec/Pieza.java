@@ -12,8 +12,21 @@ public class Pieza{
 		this.rutaImagen="/img/Transparente.png";
 	}
 	
-	public Pieza(String color){
+	public Pieza(String color,String tipoPieza){
 		this.color=color;
+		this.tipoPieza=tipoPieza;
+	}
+	
+	public Pieza(String color,String tipoPieza,String ruta){
+		this.color=color;
+		this.tipoPieza=tipoPieza;
+		this.rutaImagen=ruta;
+	}
+	
+	void definePieza(String color,String tipoPieza,String ruta){
+		this.color=color;
+		this.tipoPieza=tipoPieza;
+		this.rutaImagen=ruta;
 	}
 	
 	public String getTipoPieza() {
