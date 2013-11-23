@@ -6,7 +6,26 @@ public class ExpertoEnAjedrez {
 		tLogico=new Tablero();
 	}
 	
-    public boolean validarMovimiento(int x1, int y1, int x2, int y2){
+    public boolean validarMovimiento(String origen, String  destino){
+    	int parOrigen[]=new int[2]; //arreglos para almacenar los dos numeros de origen y destino
+    	int parDestino[]=new int[2];
+    	int i=0;
+    	origen.split("\\,");
+    	destino.split("\\,");
+    	for (String s : origen){
+    		parOrigen[i]= Integer.parseInt(s);
+    		i++
+    	}
+    	i=0;
+    	for (String s : destino){
+    		parDestino[i]= Integer.parseInt(s);
+    		i++
+    	}
+    	int x1=parOrigen[0];
+    	int y1=parOrigen[1];
+    	int x2=parDestino[0];
+    	int y2=parDestino[1];
+    	
     	String tipo= tLogico.getTTipoPieza(x1, y1);
     	String color= tLogico.getTColorPieza(x1, y1);
         if (tipo == "peon"){
