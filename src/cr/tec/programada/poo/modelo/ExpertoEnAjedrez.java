@@ -1,4 +1,4 @@
-package tec;
+package cr.tec.programada.poo.modelo;
 
 public class ExpertoEnAjedrez {
 	private Tablero tLogico;
@@ -6,11 +6,37 @@ public class ExpertoEnAjedrez {
 		tLogico=new Tablero();
 	}
 	
-    public boolean validarMovimiento(int x1, int y1, int x2, int y2){
-    	String tipo= tLogico.getTTipoPieza(x1, y1);
-    	String color= tLogico.getTColorPieza(x1, y1);
+    public boolean validarMovimiento(String origen, String  destino){
+        int parOrigen[]=new int[2]; //arreglos para almacenar los dos numeros de origen y destino
+        int parDestino[]=new int[2];
+        int i=0;
+        String orig[] = origen.split("\\,");
+        String dest[] = destino.split("\\,");
+        for (String s :orig){
+                parOrigen[i]= Integer.parseInt(s);
+                i++;
+        }
+        i=0;
+        for (String s : dest){
+                parDestino[i]= Integer.parseInt(s);
+                i++;
+        }
+        
+        int x1=parOrigen[1];
+        int y1=parOrigen[0];
+        
+        int x2=parDestino[1];
+        int y2=parDestino[0];
+        
+        System.out.println(x1);
+        System.out.println(y1);
+        System.out.println(x2);
+        System.out.println(y2);
+    	String tipo= tLogico.getTTipoPieza(y1, x1);
+    	String color= tLogico.getTColorPieza(y1, x1);
+    	System.out.println("Tipo es:"+tipo+" color pieza:"+color);
         if (tipo == "peon"){
-            if (color == "negro"){
+            if (color == "negra"){
                 if (y1 < y2){
                     if ((y1 == 1) && (y2 - y1 == 2) && (x2 == x1))
                         return true;
@@ -18,7 +44,7 @@ public class ExpertoEnAjedrez {
                         return true;
                 }
 			}
-            else if (color == "blanco"){
+            else if (color == "blanca"){
                 if (y1 > y2){
                     if ((y1 == 6) && (y1 - y2 == 2) && (x2 == x1))
                         return true;

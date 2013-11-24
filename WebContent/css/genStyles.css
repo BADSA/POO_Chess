@@ -1,8 +1,37 @@
 img{
-
+	width:45px;
+	height:45px;
+}
+#ingreso{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 300px;
+    margin-left: -250px;
+    margin-top: -150px;
 }
 
-tr.spaceUnder > td
-{
-  padding-bottom: 1em;
-}
+  #header {
+    padding: 20px;
+    height:40px;
+    }
+  
+  #content {
+    margin-right: 34%;
+    width:100%;
+    }
+  #informacion{
+  	float:left;
+  	width:35%;
+  	height:100%;	
+  }
+  #tablero{
+  	float:right;
+  	width:65%;
+  }
+  #footer {
+    clear: right;
+    padding: 20px;
+    height:40px;
+    }

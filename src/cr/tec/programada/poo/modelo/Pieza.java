@@ -1,4 +1,4 @@
-package tec;
+package cr.tec.programada.poo.modelo;
 
 public class Pieza{
 	String color;
@@ -9,7 +9,7 @@ public class Pieza{
 	public Pieza(){
 		this.tipoPieza = "Vacia";
 		this.color = "Transparente"; 
-		this.rutaImagen="/img/Transparente.png";
+		this.rutaImagen="img/transparente.png";
 	}
 	
 	public Pieza(String color,String tipoPieza){

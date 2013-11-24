@@ -1,4 +1,4 @@
-package tec;
+package cr.tec.programada.poo.modelo;
 
 public class Partida {
 	Jugador jug1;
