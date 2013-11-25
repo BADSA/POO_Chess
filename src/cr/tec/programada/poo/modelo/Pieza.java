@@ -7,7 +7,7 @@ public class Pieza{
 	private String rutaImagen;
 	
 	public Pieza(){
-		this.tipoPieza = "Vacia";
+		this.tipoPieza = "vacia";
 		this.color = "Transparente"; 
 		this.rutaImagen="img/transparente.png";
 	}

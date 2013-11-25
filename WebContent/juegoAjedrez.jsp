@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
-<%@ page  import="cr.tec.programada.poo.modelo.Tablero"%>
+<%@ page  import="cr.tec.programada.poo.modelo.Tablero,
+				cr.tec.programada.poo.modelo.ExpertoEnAjedrez"%>
   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 	   <title>Juego de Ajedrez</title>
-	   <link href='css/genStyles.css' rel='stylesheet' rev='stylesheet' type='text/css'/>
+		<link href='css/genStyles.css' rel='stylesheet' rev='stylesheet' type='text/css'/>
+		<script src='http://code.jquery.com/jquery-1.9.1.js'></script>
+		<script src='http://code.jquery.com/ui/1.10.3/jquery-ui.js'></script>
+		<script src='js/genJS.js' language='javascript' type='text/javascript'></script>	
+		
 	</head>
 	<body background='img/Chess.jpg' >
 	<c:if test="${empty sessionScope.nomJug1}" >
@@ -53,7 +58,7 @@
 		        <!-- Recorre dinamicamente la matriz tablero y la dibuja en pantalla -->      
 		        <%
 		        Tablero tAjedrez = (Tablero)request.getSession().getAttribute("tablero");
-		        request.getSession().removeAttribute("tablero");
+		        //request.getSession().removeAttribute("tablero");
 		        String colorFondo = "#ffffff";
 		        out.println("<table style='border:1px solid #757575;' bgcolor='#000000'>");
 				for (int i =0; i<8; i++){
@@ -70,9 +75,9 @@
 	        </div>
         </div>
         <div id="footer">
-        	<center><h3><font color="#3cc">Copyright © | BADSA 2013</font></h3></center>
+        	<center><h3><font color="#33cccc">Copyright © | BADSA 2013</font></h3></center>
         </div>
-    </c:if>
+    </c:if> 
        
 </body>                      
 </html>

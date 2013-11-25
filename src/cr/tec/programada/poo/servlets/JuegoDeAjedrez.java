@@ -21,18 +21,15 @@ import javax.servlet.http.HttpSession;
  */
 public class JuegoDeAjedrez extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
 	private Map<String, ComandoAplicacionWeb> comandos;
 	
-	
-       
     @Override
 	public void init() throws ServletException {
 		// Inicializar todos los objetos comando
 		comandos = new HashMap<String, ComandoAplicacionWeb>();
 		comandos.put("crearSesion", new ComandoCrearSesion());
 		comandos.put("destruirSesion", new ComandoDestruirSesion());
-		comandos.put("iniciarJuego", new ComandoIniciarJuego());
+		comandos.put("hacerJugada", new ComandoHacerJugada());
 	}
 
 	/**

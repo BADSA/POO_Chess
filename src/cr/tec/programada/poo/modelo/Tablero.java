@@ -21,19 +21,24 @@ public class Tablero {
 		tLogico[0][7].definePieza("negra","torre", "img/torreNegro.png");
 		tLogico[7][0].definePieza("blanca","torre", "img/torreBlanco.png");
 		tLogico[7][7].definePieza("blanca","torre", "img/torreBlanco.png");
-		tLogico[0][1].definePieza("negro","caballo", "img/caballoNegro.png");
-		tLogico[0][6].definePieza("negro","caballo", "img/caballoNegro.png");
+		tLogico[0][1].definePieza("negra","caballo", "img/caballoNegro.png");
+		tLogico[0][6].definePieza("negra","caballo", "img/caballoNegro.png");
 		tLogico[7][1].definePieza("blanca","caballo", "img/caballoBlanco.png");
 		tLogico[7][6].definePieza("blanca","caballo", "img/caballoBlanco.png");
-		tLogico[0][2].definePieza("negro","alfil", "img/alfilNegro.png");
-		tLogico[0][5].definePieza("negro","alfil", "img/alfilNegro.png");
-		tLogico[7][2].definePieza("blanco","alfil", "img/alfilBlanco.png");
-		tLogico[7][5].definePieza("blanco","alfil", "img/alfilBlanco.png");
-		tLogico[0][3].definePieza("negro","reina", "img/reinaNegro.png");
-		tLogico[0][4].definePieza("negro","rey", "img/reyNegro.png");
-		tLogico[7][4].definePieza("blanco","rey", "img/reyBlanco.png");
-		tLogico[7][3].definePieza("blanco","reina", "img/reinaBlanco.png");
-		
+		tLogico[0][2].definePieza("negra","alfil", "img/alfilNegro.png");
+		tLogico[0][5].definePieza("negra","alfil", "img/alfilNegro.png");
+		tLogico[7][2].definePieza("blanca","alfil", "img/alfilBlanco.png");
+		tLogico[7][5].definePieza("blanca","alfil", "img/alfilBlanco.png");
+		tLogico[0][3].definePieza("negra","reina", "img/reinaNegro.png");
+		tLogico[0][4].definePieza("negra","rey", "img/reyNegro.png");
+		tLogico[7][4].definePieza("blanca","rey", "img/reyBlanco.png");
+		tLogico[7][3].definePieza("blanca","reina", "img/reinaBlanco.png");
+	}
+	
+	public void cambiarPiezas(int x1,int y1, int x2, int y2){
+		Pieza temp = tLogico[x1][y1]; 
+		tLogico[x1][y1] = tLogico[x2][y2]; 
+		tLogico[x2][y2] = temp;
 	}
 	
 	public String getTTipoPieza(int x,int y){
