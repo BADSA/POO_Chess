@@ -117,6 +117,7 @@ public class ExpertoEnAjedrez {
                         }
                 return true;
     }
+    		// 0,0 - 4,0
         private boolean validarMovimientoVertical(int x1,int y1,int x2,int y2){
                 if (x2<x1){
                         for (int j=x1;j!=x2;j--){
@@ -126,7 +127,7 @@ public class ExpertoEnAjedrez {
                         }
                         
                 }else{
-                        for (int j=y2;j!=y1;j++){
+                        for (int j=x1;j!=x2;j++){
                                 if(tLogico.getTTipoPieza(j+1, y1)!="vacia"){
                                         return false;
                                 }
@@ -134,6 +135,7 @@ public class ExpertoEnAjedrez {
                 }
                 return true;
         }
+        
         private boolean validarDiagonalArriba(int x1,int y1,int x2,int y2){
                 if (y2<y1){//va para la izquierda
                     for(int j=y1;j!=y2;j--){
