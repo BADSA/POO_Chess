@@ -1,7 +1,7 @@
 $( document ).ready(function() {
 	var cont = 1;
 	
-	$("td").click(function(){
+	$(".escaque").click(function(){
 		if (jQuery.data( document.body, "cnt")!=null){
 			cont = jQuery.data( document.body, "cnt");
 		}
