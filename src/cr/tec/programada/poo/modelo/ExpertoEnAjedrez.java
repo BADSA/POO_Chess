@@ -9,177 +9,278 @@ public class ExpertoEnAjedrez {
         
    
     public boolean validarMovimiento(int x1,int y1,int x2,int y2){
+    		boolean isFicha=false;
             String tipo= tLogico.getTTipoPieza(x1, y1);
             String color= tLogico.getTColorPieza(x1, y1);
         System.out.println(tipo+ " "+color );
         if (tipo == "peon"){
+        	isFicha=true;
+        	String colorContrario="";
             if (color == "negra"){
+               colorContrario="blanca";
                 if (x1 < x2){
                     if ((x1 == 1) && (x2 - x1 == 2) && (y2 == y1)){
                         return true;
                     }
-                    if (x2 - x1 == 1 && Math.abs(y1 - y2) <= 1){
-                            System.out.println("si valida ants de if");
-                            System.out.println(tLogico.getTColorPieza(x2, y2));
-                            if (color==tLogico.getTColorPieza(x2, y2)){
-                                    return false;
-                            }
-                        return true;
-                    }
+                    if (x2 - x1 == 1 && Math.abs(y1 - y2) <= 1){ 
+                        if (color == tLogico.getTColorPieza(x2, y2)){
+                        	return false;
+                        }else if (y1!=y2 && (tLogico.getTTipoPieza(x2, y2)=="vacia" || tLogico.getTColorPieza(x2, y2)==color)){
+                			return false;
+                		}
+                    }else{
+                    	return false;
+                    	}
+                }else{
+                	return false;
                 }
-                        }
+
+            }
             else if (color == "blanca"){
+            	colorContrario="negra";
                 if (x1 > x2){
                     if ((x1 == 6) && (x1 - x2 == 2) && (y2 == y1)){
                         return true;
                     }
                     if (x1 - x2 == 1 && Math.abs(y1 - y2) <= 1){
-                            System.out.println(tLogico.getTColorPieza(x2, y2));
-                            if (color==tLogico.getTColorPieza(x2, y2)){
-                                    return false;
-                            }                
-                        return true;
-                    }
-                }
+                        if (color==tLogico.getTTipoPieza(x2, y2)){
+                                return false;
                         }
+                        if (y1!=y2 && (tLogico.getTTipoPieza(x2, y2)=="vacia" || tLogico.getTColorPieza(x2, y2)==color)){
+                			return false;
+                		}
+                    }else{
+                    	return false;
+                    	}
+                }else{return false;}
+            }
+            if (y1==y2 && colorContrario==tLogico.getTColorPieza(x2, y2) && x1!=x2){
+            	return false;
+            }
         }
     if (tipo == "torre"){
-            if ((x1 == x2) || (y1 == y2)){
-                if (x1==x2){
-                        return validarMovimientoHorizontal(x1,y1,x2,y2);
-                }else{
-                        return validarMovimientoVertical(x1,y1,x2,y2);
+    	isFicha=true;
+        if ((x1 == x2) || (y1 == y2)){
+            if (x1==x2){
+            	System.out.println("aqui toree"+validarMovimientoHorizontal(x1,y1,x2,y2) );
+                if(validarMovimientoHorizontal(x1,y1,x2,y2)==false){
+                	return false;
+                }	
+            }else{
+            	System.out.println("aqui toree"+validarMovimientoHorizontal(x1,y1,x2,y2) );
+            	if(validarMovimientoVertical(x1,y1,x2,y2)==false){
+                	return false;
                 }
             }
-        //return true;
+        }else{
+        	return false;
+        }
     }
     if (tipo == "alfil"){
+    	isFicha=true;
     	if (Math.abs(x1 - x2) == Math.abs(y1 - y2)){
             if (x2<x1){//va para arriba 
-                    return this.validarDiagonalArriba(x1,y1,x2,y2);
-                    
+                    if( this.validarDiagonalArriba(x1,y1,x2,y2)==false){
+                    	return false;
+                    }
             }else{//va para abajo
-                    return this.validarDiagonalAbajo(x1,y1,x2,y2);
+                if(this.validarDiagonalAbajo(x1,y1,x2,y2)==false){
+                	return false;
+                }
             }
+    	}else{
+    		return false;
     	}
     }
     if (tipo == "reina"){
+    	isFicha=true;
         if ((x1 == x2 || y1 == y2) || (Math.abs(x1 - x2) == Math.abs(y1 - y2))){
-                if (x1==x2){
-                        return this.validarMovimientoHorizontal(x1, y1, x2, y2);
+            if (x1==x2){
+                 if (this.validarMovimientoHorizontal(x1, y1, x2, y2)==false){
+                	 return false;
+                 }
+            }
+            else if (y1==y2){
+                if(this.validarMovimientoVertical(x1, y1, x2, y2)==false){
+                	return false;
+                } 	
+            }
+            else if (x1!=x2 && y1!=y2){
+                if (x2<x1){//va para arriba 
+                	if(this.validarDiagonalArriba(x1, y1, x2, y2)==false){
+                    	return false;
+                    }
                 }
-                else if (y1==y2){
-                        return this.validarMovimientoVertical(x1, y1, x2, y2);
+            }else{//va para abajo
+                if(this.validarDiagonalAbajo(x1, y1, x2, y2)==false){
+                	return false;
                 }
-                else if (x1!=x2 && y1!=y2){
-                        if (x2<x1){//va para arriba 
-                        return this.validarDiagonalArriba(x1, y1, x2, y2);
-                        
-                }else{//va para abajo
-                        return this.validarDiagonalAbajo(x1, y1, x2, y2);
-                }
-                }
+            }
+        }else{
+        	return false;
         }
     }
-    
     if (tipo == "rey"){
+    	isFicha=true;
         if (Math.abs(x1 - x2) <= 1 && Math.abs(y1 - y2) <= 1){
-                if(tLogico.getTColorPieza(x2, y2)==color){
-                        return false;
-                }
-                return true;
-        }  
+            if(tLogico.getTColorPieza(x2, y2)==color){
+                    return false;
+            }
+        }else{
+        	return false;
+        }
     }
     if (tipo == "caballo"){
-                if ((Math.abs(x1 - x2) + Math.abs(y1 - y2) == 3) && (Math.abs(x1-x2) >= 1) && (Math.abs(x1-x2) >= 1)){
-                        System.out.println(tLogico.getTColorPieza(x2, y2));
-                    if (tLogico.getTColorPieza(x2, y2)==color){
-                            return false;
-                    }
-                        return true;
-                } 
+    	isFicha=true;
+        if ((Math.abs(x1 - x2) + Math.abs(y1 - y2) == 3) && (Math.abs(x1-x2) >= 1) && (Math.abs(x1-x2) >= 1)){
+                System.out.println(tLogico.getTColorPieza(x2, y2));
+            if (tLogico.getTColorPieza(x2, y2)==color){
+                    return false;
             }
+        }else{
+        	return false;
+        }
+    }
+    if (x1==x2 && y1==y2){
+    	return false;
+    }
+    if (isFicha && color!=tLogico.getTColorPieza(x2, y2)){
+    	this.comerFicha(x2,y2);
+    	return true;
+    }
     return false;
     }
     
     private boolean validarMovimientoHorizontal(int x1,int y1,int x2,int y2){
-                        if (y2<y1){
-                                for (int j=y1;j!=y2;j--){
-                                        if(tLogico.getTTipoPieza(x1, j-1)!="vacia"){
-                                                return false;
-                                        }
-                                }
-                        }else{
-                                for (int j=y1;j!=y2;j++){
-                                        if(tLogico.getTTipoPieza(x1, j+1)!="vacia"){
-                                                return false;
-                                        }
-                                }
-                        }
-                return true;
+    	String color=tLogico.getTColorPieza(x1, y1);
+		String colorContrario=this.getColorContario(x1, y1);
+		int saltaColor=0;	
+        if (y2<y1){
+            for (int j=y1;j!=y2;j--){
+                if(tLogico.getTColorPieza(x1, j-1)==color){
+                        return false;
+                }else if(tLogico.getTColorPieza(x1, j-1)==colorContrario){
+                	saltaColor++;
+                }
+            }
+        }else{
+            for (int j=y1;j!=y2;j++){
+                if(tLogico.getTColorPieza(x1, j+1)==color){
+                        return false;
+                }else if(tLogico.getTColorPieza(x1, j+1)==colorContrario){
+                	saltaColor++;
+                }
+            }
+        }
+        if (saltaColor>1 || (saltaColor>=1 && tLogico.getTTipoPieza(x2, y2)=="vacia")){
+        	return false;
+        }
+        return true;
     }
     		// 0,0 - 4,0
-        private boolean validarMovimientoVertical(int x1,int y1,int x2,int y2){
-                if (x2<x1){
-                        for (int j=x1;j!=x2;j--){
-                                if(tLogico.getTTipoPieza(j-1,y1)!="vacia"){
-                                        return false;
-                                }
-                        }
-                        
-                }else{
-                        for (int j=x1;j!=x2;j++){
-                                if(tLogico.getTTipoPieza(j+1, y1)!="vacia"){
-                                        return false;
-                                }
-                        }
+    private boolean validarMovimientoVertical(int x1,int y1,int x2,int y2){
+    	String color=tLogico.getTColorPieza(x1, y1);
+		String colorContrario=this.getColorContario(x1, y1);
+		int saltaColor=0;
+        if (x2<x1){
+            for (int j=x1;j!=x2;j--){
+                if(tLogico.getTColorPieza(j-1,y1)==color){
+                    return false;
+                }else if(tLogico.getTColorPieza(j-1, y1)==colorContrario){
+                	saltaColor++;
                 }
-                return true;
+            }                
+        }else{
+            for (int j=x1;j!=x2;j++){
+                if(tLogico.getTColorPieza(j+1, y1)==color){
+                	return false;
+                }else if(tLogico.getTColorPieza(j+1, y1)==colorContrario){
+                	saltaColor++;
+                }
+            }
         }
-        
-        private boolean validarDiagonalArriba(int x1,int y1,int x2,int y2){
-        		int contador=1;
-                if (y2<y1){//va para la izquierda
+        System.out.println(saltaColor);
+        if (saltaColor>1 || (saltaColor>=1 && tLogico.getTTipoPieza(x2, y2)=="vacia")){
+        	return false;
+        }
+        return true;
+    }
+    
+    private boolean validarDiagonalArriba(int x1,int y1,int x2,int y2){
+    	String color=tLogico.getTColorPieza(x1, y1);
+		String colorContrario=this.getColorContario(x1, y1);
+		int saltaColor=0;
+		int contador=1;
+        if (y2<y1){//va para la izquierda
+            for(int j=y1;j!=y2;j--){
+                    if (tLogico.getTColorPieza(x1-contador, j-1)==color){
+                            return false;
+                    }else if(tLogico.getTColorPieza(x1-contador, j-1)==colorContrario){
+                    	saltaColor++;
+                    }
+                    contador++;
+                    System.out.println(j);
+            }
+        }else{//va para la derecha
+        for(int j=y1;j!=y2;j++){
+                if (tLogico.getTColorPieza(x1-contador, j+1)==color){
+                        return false;
+                }else if(tLogico.getTColorPieza(x1-contador, j-1)==colorContrario){
+                	saltaColor++;
+                }
+                contador++;
+                System.out.println(j);
+            }
+        }
+        if (saltaColor>1 || (saltaColor>=1 && tLogico.getTTipoPieza(x2, y2)=="vacia")){
+        	return false;
+        }
+        return true;
+    }
+    
+    private boolean validarDiagonalAbajo(int x1,int y1,int x2,int y2){
+    		String color=tLogico.getTColorPieza(x1, y1);
+    		String colorContrario=this.getColorContario(x1, y1);
+    		int saltaColor=0;
+    		int contador=1;
+            if (y2<y1){//va para la izquierda 
                     for(int j=y1;j!=y2;j--){
-                            if (tLogico.getTTipoPieza(x1-contador, j-1)!="vacia"){
+                            if (tLogico.getTColorPieza(x1+contador, j-1)==color){
                                     return false;
+                            }else if(tLogico.getTColorPieza(x1+contador, j+1)==colorContrario){
+                            	saltaColor++;
                             }
                             contador++;
                             System.out.println(j);
                     }
             }else{//va para la derecha
                     for(int j=y1;j!=y2;j++){
-                            if (tLogico.getTTipoPieza(x1-contador, j+1)!="vacia"){
+                            if (tLogico.getTColorPieza(x1+contador, j+1)==color){
                                     return false;
+                            }else if(tLogico.getTColorPieza(x1+contador, j+1)==colorContrario){
+                            	saltaColor++;
                             }
                             contador++;
                             System.out.println(j);
                     }
             }
-                return true;
-        }
-        
-        private boolean validarDiagonalAbajo(int x1,int y1,int x2,int y2){
-        		int contador=1;
-                if (y2<y1){//va para la izquierda 
-                        for(int j=y1;j!=y2;j--){
-                                if (tLogico.getTTipoPieza(x1+contador, j-1)!="vacia"){
-                                        return false;
-                                }
-                                contador++;
-                                System.out.println(j);
-                        }
-                }else{//va para la derecha
-                        for(int j=y1;j!=y2;j++){
-                                if (tLogico.getTTipoPieza(x1+contador, j+1)!="vacia"){
-                                        return false;
-                                }
-                                contador++;
-                                System.out.println(j);
-                        }
-                }
-                return true;
-        }
+            if (saltaColor>1 || (saltaColor>=1 && tLogico.getTTipoPieza(x2, y2)=="vacia")){
+            	return false;
+            }
+            return true;
+    }
+    private void comerFicha(int x2,int y2){
+    	tLogico.ponerFichaVacia(x2, y2);
+    	
+    }
+    private String getColorContario(int x1,int y1){
+    	String color=tLogico.getTColorPieza(x1, y1);
+		String colorContrario;
+		if (color=="negra"){
+			colorContrario="blanca";
+		}else{colorContrario="negra";}
+		return colorContrario;
+    }
   /*  
     /*
          * 
