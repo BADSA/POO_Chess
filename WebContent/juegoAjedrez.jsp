@@ -14,7 +14,7 @@
 		
 	</head>
 	<body background='img/Chess.jpg' >
-	<c:if test="${empty sessionScope.nomJug1}" >
+	<c:if test="${empty sessionScope.nomJugBlancas}" >
 		<div id="ingreso">
 	        <form action="JuegoDeAjedrez" method="get" style="text-align:center;">
 	            <input type="hidden" name="accion" value="crearSesion" />
@@ -23,18 +23,19 @@
 	            		<td colspan="2" align="center"> <h2><FONT COLOR="#33cccc"> Juego de Ajedrez </FONT> </h2> </td>
 	            	</tr><tr>
 			            <td > <FONT COLOR="#ffffff">Jugador de blancas: </FONT> </td> 
-			            <td> <input type="text" name="nomJug1"/></td>
+			            <td> <input type="text" name="nomJugBlancas"/></td>
 			        </tr><tr>
 			            <td > <FONT COLOR="#ffffff"> Jugador de negras: </FONT></td>  
-			            <td><input type="text" name="nomJug2"/></td>
+			            <td><input type="text" name="nomJugNegras"/></td>
 			        </tr>
 		        </table><br>
 	            <input type="submit" value="Definir Sesion">
 	        </form>           
        	</div>          
     </c:if>
-
-    <c:if test="${!empty sessionScope.nomJug1}" >
+    
+    
+    <c:if test="${!empty sessionScope.ganador}" >
 		<div id="header">    
     	 	<center><h1><FONT COLOR="#33cccc"> Juego de Ajedrez </FONT> </h1></center>
     	</div>
@@ -43,13 +44,37 @@
 	    		<br><br>
 	    		<center>
 				 <b><FONT COLOR="#ffffff">Jugador de blancas: </FONT></b> 
-			     <b><FONT COLOR="#ffffff"><c:out value="${sessionScope.nomJug1}" /></FONT></b><br>
+			     <b><FONT COLOR="#ffffff"><c:out value="${sessionScope.nomJugBlancas}" /></FONT></b><br>
 			     <b><FONT COLOR="#ffffff"> Jugador de  negras: </FONT></b>
-			     <b><FONT COLOR="#ffffff"><c:out value="${sessionScope.nomJug2}" /></FONT></b><br><br>
+			     <b><FONT COLOR="#ffffff"><c:out value="${sessionScope.nomJugNegras}" /></FONT></b><br><br>
+			    
 			    <form action="JuegoDeAjedrez" method="get">
 			        <input type="hidden" name="accion" value="destruirSesion" />
 			        <input type="submit" value="Finalizar Sesion">
 			    </form><br>
+			    
+			    <form action="JuegoDeAjedrez" method="get">
+			        <input type="hidden" name="accion" value="decirGanador" />
+			        <input type="hidden" name="jug" value="negras" />
+			        <input type="submit" value="Rendirse jugador blancas" disabled>
+			    </form><br>
+			    
+			    <form action="JuegoDeAjedrez" method="get">
+			        <input type="hidden" name="accion" value="decirGanador" />
+			        <input type="hidden" name="jug" value="blancas" />
+			        <input type="submit" value="Rendirse jugador negras" disabled>
+			    </form><br>
+			  
+			    <form action="JuegoDeAjedrez" method="get">
+			        <input type="hidden" name="accion" value="decirGanador" />
+			        <input type="hidden" name="jug" value="empate" />
+			        <input type="submit" value="Acordar Empate" disabled>
+			    </form><br>		
+			    
+			    <form action="JuegoDeAjedrez" method="get">
+			        <input type="hidden" name="accion" value="reiniciarJuego" />
+			        <input type="submit" value="Reiniciar Juego">
+			    </form><br>			 					    
 			    </center>
 	        </div>
 	        <div id="tablero">  
@@ -57,6 +82,91 @@
 	        
 		        <!-- Recorre dinamicamente la matriz tablero y la dibuja en pantalla -->      
 		        <%
+		        Tablero tAjedrez = (Tablero)request.getSession().getAttribute("tablero");
+		        //request.getSession().removeAttribute("tablero");
+		        String colorFondo = "#ffffff";
+		        out.println("<table style='border:1px solid #757575;' bgcolor='#000000'>");
+				for (int i =0; i<8; i++){
+					out.println("<tr align='center'>");
+					for (int j =0; j<8; j++){
+						out.println("<td id='"+i+","+j+"' bgcolor='"+colorFondo+"' ><img  src='"+tAjedrez.getTRutaPieza(i, j)+"'></td>");
+						if (colorFondo=="#ffffff"){ colorFondo = "#787878"; }else{ colorFondo = "#ffffff"; }
+					}
+					if (colorFondo=="#ffffff"){ colorFondo = "#787878"; }else{ colorFondo = "#ffffff"; }
+					out.println("</tr>");	
+				}
+				out.println("</table>");
+				String ganador = (String)request.getSession().getAttribute("ganador");
+				if (ganador.equals("XempateX")){
+					out.println("<script> alert('Hubo un empate');</script>");
+				}else{ out.println("<script> alert('El ganador es: "+ganador+"');</script>");}
+				
+				//request.getSession().removeAttribute("ganador");
+		        %>
+	        </div>
+        </div>
+        <div id="footer">
+        	<center><h3><font color="#33cccc">Copyright © | BADSA 2013</font></h3></center>
+        </div>
+         
+    </c:if>    
+    
+    
+    
+    
+    
+
+    <c:if test="${!empty sessionScope.nomJugBlancas && empty sessionScope.ganador}" >
+		<div id="header">    
+    	 	<center><h1><FONT COLOR="#33cccc"> Juego de Ajedrez </FONT> </h1></center>
+    	</div>
+    	<div id="content">
+	    	<div id="informacion">
+	    		<br><br>
+	    		<center>
+				 <b><FONT COLOR="#ffffff">Jugador de blancas: </FONT></b> 
+			     <b><FONT COLOR="#ffffff"><c:out value="${sessionScope.nomJugBlancas}" /></FONT></b><br>
+			     <b><FONT COLOR="#ffffff"> Jugador de  negras: </FONT></b>
+			     <b><FONT COLOR="#ffffff"><c:out value="${sessionScope.nomJugNegras}" /></FONT></b><br><br>
+			    
+			    <form action="JuegoDeAjedrez" method="get">
+			        <input type="hidden" name="accion" value="destruirSesion" />
+			        <input type="submit" value="Finalizar Sesion">
+			    </form><br>
+			    
+			    <form action="JuegoDeAjedrez" method="get">
+			        <input type="hidden" name="accion" value="decirGanador" />
+			        <input type="hidden" name="jug" value="negras" />
+			        <input type="submit" value="Rendirse jugador blancas" >
+			    </form><br>
+			    
+			    <form action="JuegoDeAjedrez" method="get">
+			        <input type="hidden" name="accion" value="decirGanador" />
+			        <input type="hidden" name="jug" value="blancas" />
+			        <input type="submit" value="Rendirse jugador negras" >
+			    </form><br>
+			  
+			    <form action="JuegoDeAjedrez" method="get">
+			        <input type="hidden" name="accion" value="decirGanador" />
+			        <input type="hidden" name="jug" value="empate" />
+			        <input type="submit" value="Acordar Empate" >
+			    </form><br>		
+			    
+			    <form action="JuegoDeAjedrez" method="get">
+			        <input type="hidden" name="accion" value="reiniciarJuego" />
+			        <input type="submit" value="Reiniciar Juego">
+			    </form><br>				 				    
+			    </center>
+	        </div>
+	        <div id="tablero">  
+	      	<br><br>
+	        
+		        <!-- Recorre dinamicamente la matriz tablero y la dibuja en pantalla -->      
+		        <%
+		        String colorActual = (String)request.getSession().getAttribute("turno");
+		        out.println("<font color='#ffffff'><h3>Turno de "+colorActual+"s</h3></font>");		
+		        
+		     
 		        Tablero tAjedrez = (Tablero)request.getSession().getAttribute("tablero");
 		        //request.getSession().removeAttribute("tablero");
 		        String colorFondo = "#ffffff";

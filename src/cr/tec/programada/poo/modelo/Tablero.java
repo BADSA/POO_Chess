@@ -51,4 +51,30 @@ public class Tablero {
 	public String getTRutaPieza(int x,int y){
 		return tLogico[x][y].getRuta();
 	}
+	
+	public int[] getPosRey(String color){
+		int pos[] = new int[2];
+	    for (int x=0;x<8;x++){
+	        for (int y=0;y<8;y++){
+	            if (this.getTTipoPieza(x, y) == "rey"){
+	                if (this.getTColorPieza(x, y) == color){
+	                    pos[0] = x;
+	                    pos[1] = y;
+	                }
+	            }
+	        }
+	    }
+		return pos;
+	}
+	public void ponerFichaVacia(int x,int y){
+		tLogico[x][y]= new Pieza();
+	}
+	
+	public Pieza getPieza(int x,int y){
+		return tLogico[x][y];
+	}
+	
+	public void setPieza(int x,int y, Pieza p){
+		tLogico[x][y]=p;
+	}
 };

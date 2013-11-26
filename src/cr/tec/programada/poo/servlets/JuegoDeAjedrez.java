@@ -30,6 +30,8 @@ public class JuegoDeAjedrez extends HttpServlet {
 		comandos.put("crearSesion", new ComandoCrearSesion());
 		comandos.put("destruirSesion", new ComandoDestruirSesion());
 		comandos.put("hacerJugada", new ComandoHacerJugada());
+		comandos.put("decirGanador", new ComandoDecirGanador());
+		comandos.put("reiniciarJuego", new ComandoReiniciarJuego());
 	}
 
 	/**
