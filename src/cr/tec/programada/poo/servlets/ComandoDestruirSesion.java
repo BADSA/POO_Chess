@@ -11,6 +11,8 @@ public class ComandoDestruirSesion implements ComandoAplicacionWeb {
 			HttpServletResponse response) {
 		// Obtener la sesión
 		HttpSession session = request.getSession(false);
+		
+		// Si existe una sesion, se procede a invalidar esta.
 		if (session != null) {
 			session.invalidate();
 		}

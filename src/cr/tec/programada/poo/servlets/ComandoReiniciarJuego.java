@@ -13,10 +13,15 @@ public class ComandoReiniciarJuego implements ComandoAplicacionWeb {
 	public void ejecutar(HttpServletRequest request,
 			HttpServletResponse response) {
 		
+		// Reinicia el estado del tablero y de los atributos mas importantes de la sesion
+		
+		// Elimina el ganador
 		request.getSession().removeAttribute("ganador");
-		request.getSession().removeAttribute("jaque");
+		// Resetea el estado de jaque
+		request.getSession().setAttribute("jaque", "false");
 		Tablero tAjedrez = new Tablero();
 		request.getSession().setAttribute("tablero",tAjedrez);
+		// Establece el primer turno de nuevo.
 		request.getSession().setAttribute("turno", "blanca");
 	}
 
