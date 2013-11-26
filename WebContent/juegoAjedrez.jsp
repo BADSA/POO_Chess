@@ -180,7 +180,10 @@
 					if (colorFondo=="#ffffff"){ colorFondo = "#787878"; }else{ colorFondo = "#ffffff"; }
 					out.println("</tr>");	
 				}
-				out.println("</table>");
+				out.println("</table><br>");
+				if ((String)request.getSession().getAttribute("jaque") == "true"){
+					out.println("<font color='#ffffff'>Jugador de "+colorActual+" se encuentra en jaque! </font>");
+				}
 		        %>
 	        </div>
         </div>

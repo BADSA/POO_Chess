@@ -6,6 +6,7 @@ public class Pieza{
 	private int x,y;
 	private String rutaImagen;
 	
+	// Inicializa una pieza vacia
 	public Pieza(){
 		this.tipoPieza = "vacia";
 		this.color = "Transparente"; 

@@ -32,18 +32,6 @@ public class ComandoHacerJugada implements ComandoAplicacionWeb {
 		}else{colorContrario = "negra"; }
 		
 		if (!eA.revisarJaque(colorContrario)){
-			if (turnoActual == tAjedrez.getTColorPieza(parOrigen[0],parOrigen[1]) ){
-				valido = eA.validarMovimiento(parOrigen[0],parOrigen[1],parDestino[0],parDestino[1]);
-			}
-			if (valido){
-				tAjedrez.cambiarPiezas(parOrigen[0],parOrigen[1],parDestino[0],parDestino[1]);
-				if (request.getSession().getAttribute("turno")=="blanca"){
-					request.getSession().setAttribute("turno","negra");
-				}else{
-					request.getSession().setAttribute("turno","blanca");
-				}
-			}
-		}else{
 			if (!eA.poneElMovimientoJugEnJaque(colorContrario,parOrigen[0],parOrigen[1],parDestino[0],parDestino[1] ) ){
 				if (turnoActual == tAjedrez.getTColorPieza(parOrigen[0],parOrigen[1]) ){
 					valido = eA.validarMovimiento(parOrigen[0],parOrigen[1],parDestino[0],parDestino[1]);
@@ -55,6 +43,23 @@ public class ComandoHacerJugada implements ComandoAplicacionWeb {
 					}else{
 						request.getSession().setAttribute("turno","blanca");
 					}
+					request.getSession().setAttribute("jaque","false");
+				}
+			}else{ System.out.println("No puede realizar este movimiento, ya que deja a su rey en jaque");}
+		}else{
+			request.getSession().setAttribute("jaque","true");
+			if (!eA.poneElMovimientoJugEnJaque(colorContrario,parOrigen[0],parOrigen[1],parDestino[0],parDestino[1] ) ){
+				if (turnoActual == tAjedrez.getTColorPieza(parOrigen[0],parOrigen[1]) ){
+					valido = eA.validarMovimiento(parOrigen[0],parOrigen[1],parDestino[0],parDestino[1]);
+				}
+				if (valido){
+					tAjedrez.cambiarPiezas(parOrigen[0],parOrigen[1],parDestino[0],parDestino[1]);
+					if (request.getSession().getAttribute("turno")=="blanca"){
+						request.getSession().setAttribute("turno","negra");
+					}else{
+						request.getSession().setAttribute("turno","blanca");
+					}
+					request.getSession().setAttribute("jaque","false");
 				}
 			}else{ 
 				System.out.println("Se encuentra en haque, su movimiento debe evitar el haque.");

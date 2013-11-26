@@ -248,7 +248,7 @@ public class ExpertoEnAjedrez {
         for(int j=y1;j!=y2;j++){
                 if (tLogico.getTColorPieza(x1-contador, j+1)==color){
                         return false;
-                }else if(tLogico.getTColorPieza(x1-contador, j-1)==colorContrario){
+                }else if(tLogico.getTColorPieza(x1-contador, j+1)==colorContrario){
                 	saltaColor++;//contador para hacer la resta a la posicion relativa a consultar
                 }
                 contador++;
@@ -259,39 +259,40 @@ public class ExpertoEnAjedrez {
         }
         return true;
     }
+    
     //Recibe dos pares ordenados de cordenadas segun la matriz;
     //se recorre la matriz para abajo segun los Y se define si es para la derecha o para la izquierda
     //en este metodo se consideran los casos para los incremtentos
     //abajo a la izquierda significa un incremento en "x" y un decremento en "y"
     //abajo a la derecha significa un incremento en "x" y en "y"
     private boolean validarDiagonalAbajo(int x1,int y1,int x2,int y2){
-    		String color=tLogico.getTColorPieza(x1, y1);
-    		String colorContrario=this.getColorContario(x1, y1);
-    		int saltaColor=0;
-    		int contador=1;
-            if (y2<y1){//va para la izquierda
-                    for(int j=y1;j!=y2;j--){
-                            if (tLogico.getTColorPieza(x1+contador, j-1)==color){
-                                    return false;
-                            }else if(tLogico.getTColorPieza(x1+contador, j+1)==colorContrario){
-                            	saltaColor++;
-                            }
-                            contador++;//contador para hacer la resta a la posicion relativa a consultar
-                    }
-            }else{//va para la derecha
-                    for(int j=y1;j!=y2;j++){
-                            if (tLogico.getTColorPieza(x1+contador, j+1)==color){
-                                    return false;
-                            }else if(tLogico.getTColorPieza(x1+contador, j+1)==colorContrario){
-                            	saltaColor++;
-                            }
-                            contador++;//contador para hacer la resta a la posicion relativa a consultar
-                    }
-            }
-            if (saltaColor>1 || (saltaColor>=1 && tLogico.getTTipoPieza(x2, y2)=="vacia")){
-            	return false;
-            }
-            return true;
+		String color=tLogico.getTColorPieza(x1, y1);
+		String colorContrario=this.getColorContario(x1, y1);
+		int saltaColor=0;
+		int contador=1;
+        if (y2<y1){//va para la izquierda 
+                for(int j=y1;j!=y2;j--){
+                        if (tLogico.getTColorPieza(x1+contador, j-1)==color){
+                                return false;
+                        }else if(tLogico.getTColorPieza(x1+contador, j-1)==colorContrario){
+                        	saltaColor++;
+                        }
+                        contador++;//contador para hacer la resta a la posicion relativa a consultar
+                }
+        }else{//va para la derecha
+                for(int j=y1;j!=y2;j++){
+                        if (tLogico.getTColorPieza(x1+contador, j+1)==color){
+                                return false;
+                        }else if(tLogico.getTColorPieza(x1+contador, j+1)==colorContrario){
+                        	saltaColor++;
+                        }
+                        contador++;//contador para hacer la resta a la posicion relativa a consultar
+                }
+        }
+        if (saltaColor>1 || (saltaColor>=1 && tLogico.getTTipoPieza(x2, y2)=="vacia")){
+        	return false;
+        }
+        return true;
     }
     //se pasa por parametro la ficha que se va a remover del tablero
     private void comerFicha(int x2,int y2){
@@ -308,14 +309,16 @@ public class ExpertoEnAjedrez {
 		return colorContrario;
     }
 
-    public int[] getPosRey(String Color){
+    // Funcion que devuelve un arreglo con la posicion del rey, del color pasado como parametro.
+    public int[] getPosRey(String color){
     	int posRey[] = new int[2];
 	    for (int x=0;x<8;x++){
 	        for (int y=0;y<8;y++){
 	        	if (tLogico.getTColorPieza(x, y)=="rey"){
-		        	if (tLogico.getTColorPieza(x, y)==Color){
+		        	if (tLogico.getTColorPieza(x, y)==color){
 		        		posRey[0] = x;
 		        		posRey[1] = y;
+		        		// Se quiebra el ciclo una ves que se encuentra.
 		        		break;
 		        	}
 	        	}
@@ -324,22 +327,29 @@ public class ExpertoEnAjedrez {
     	return posRey;
     }
 
+    // Funcion que revisa si el jugador actual esta en jaque.
+    // Retorna true si se encuentra en jaque, false si no.
     public boolean revisarJaque(String colorContrario){
     	String turnoActual;
+    	// Se obtiene el turno actual por medio del color del rival
     	if (colorContrario.equals("blanca")){
     		turnoActual = "negra";
     	}else {turnoActual = "blanca"; }
-
+    	
+    	// Se obtiene la posicion del rey del color actual
     	int posReyMiColor[] = new int[2];
     	posReyMiColor = tLogico.getPosRey(turnoActual);
-
+    	
+    	// Ciclo para revisar si alguna pieza del rival puede comer el rey del color actual.
 	    for (int x=0;x<8;x++){
 	        for (int y=0;y<8;y++){
 	            if (tLogico.getTColorPieza(x, y) == colorContrario){
+	            	// Se guarda el rey en caso de que se pueda comer
 	            	Pieza tmp = tLogico.getPieza(posReyMiColor[0],posReyMiColor[1]);
 	            	if (validarMovimiento(x,y,posReyMiColor[0],posReyMiColor[1])){
+	            		// Se regresa el rey a su posicion.
 	            		tLogico.setPieza(posReyMiColor[0],posReyMiColor[1],tmp);
-	            		System.out.println("se esta en jaque..");
+	            		//System.out.println("se esta en jaque..atacante"+x+"-"+y);
 	            		return true;
 	            	}
 	            }
@@ -349,6 +359,8 @@ public class ExpertoEnAjedrez {
     }
 
     /*
+     * 
+    // Funcion que revisa el hay mate, y regresa true si hay, false si no lo hay.
 	public boolean revisarMate(String color){
 		String myColor;
 		String enemyColor;
@@ -368,12 +380,15 @@ public class ExpertoEnAjedrez {
 					myColorValidMoves += (getListOfValidMoves(i,j));
 				}
 		}
+		
+		// Si no hay movimiento validos, hay jaque mate!
 		if (myColorValidMoves.lenght == 0){
 			return true;
 		}else{
 			return false;
 		}
-
+	
+	// Funcion para obtener la lista de movimientos de una pieza.
 	public int[] getListOfValidMoves(int x , int y){
 		int []legalDestinationSpaces;
 		for (int i = 0 ;i<8 ; i++){
@@ -389,176 +404,25 @@ public class ExpertoEnAjedrez {
 	}
 
 	*/
+    
+    // Funcion que simula un movimiento, para ver si este deja el rey en jaque.
+    // regresa true si el rey queda en jaque despues del movimiento, sino regresa false.
 	public boolean poneElMovimientoJugEnJaque(String color, int xOrigen,int yOrigen,int xDestino,int yDestino){
+		//Se guardan las piezas al inicio para despues regresarlas a su posicion original
 		Pieza desdePieza = tLogico.getPieza(xOrigen,yOrigen);
 		Pieza hastaPieza = tLogico.getPieza(xDestino,yDestino);
 
+		// Se hace el movimiento
 		tLogico.cambiarPiezas(xOrigen, yOrigen, xDestino, yDestino);
 
+		// Se revisa si ocurre jaque
 		boolean valor = revisarJaque(color);
 
+		// Se regresan las piezas a su posicion.
 		tLogico.setPieza(xDestino, yDestino,hastaPieza);
 		tLogico.setPieza(xOrigen,yOrigen,desdePieza);
 
 		return valor;
 	}
-
-
-  /*
-    /*
-         *
-        // metodo Validar
-    public boolean Validar(int x1, int y1, int x2, int y2){
-        if (tipo == "peon"){
-            if (color == "negro"){
-                if (y1 < y2){
-                    if ((y1 == 1) && (y2 - y1 == 2) && (x2 == x1))
-                        return true;
-                    if (y2 - y1 == 1 && Math.abs(x1 - x2) <= 1)
-                        return true;
-                }
-                        }
-            else if (color == "blanco"){
-                if (y1 > y2){
-                    if ((y1 == 6) && (y1 - y2 == 2) && (x2 == x1))
-                        return true;
-                    if (y1 - y2 == 1 && Math.abs(x1 - x2) <= 1)
-                        return true;
-                }
-                        }
-        }
-
-    if (tipo == "torre")
-            if ((x1 == x2) || (y1 == y2))
-            return true;
-    if (tipo == "alfil")
-            if (Math.abs(x1 - x2) == Math.abs(y1 - y2))
-            return true;
-    if (tipo == "reina")
-        if ((x1 == x2 || y1 == y2) || (Math.abs(x1 - x2) == Math.abs(y1 - y2)))
-            return true;
-    if (tipo == "rey")
-        if (Math.abs(x1 - x2) <= 1 && Math.abs(y1 - y2) <= 1)
-            return true;
-    if (tipo == "caballo")
-        if ((Math.abs(x1 - x2) + Math.abs(y1 - y2) == 3) && (Math.abs(x1-x2) >= 1) && (Math.abs(x1-x2) >= 1))
-            return true;
-    return false;
-}
-
-
-
-
-        //metodo Jaque
-                public String Jaque(Piezas[][] matrizPiezas, int[] Reyblanco, int[] Reynegro){
-                        int negro = 0;
-                        int blanco = 0;
-                        for (int x=0;x<8;x++){
-                                for (int y=0;y<8;y++){
-                                        if (matrizPiezas[y][x] != null){
-                                                if (matrizPiezas[y][x].getColor().equals("negro")) {
-                                                        if (matrizPiezas[y][x].Validar(x, y, Reyblanco[0], Reyblanco[1]) && Verificar (x, y, Reyblanco[0], Reyblanco[1]) && Comer (x, y, Reyblanco[0], Reyblanco[1]))
-                                                                blanco = 1;
-                            }
-                                                if (matrizPiezas[y][x].getColor().equals("blanco"))
-                                                        if (matrizPiezas[y][x].Validar(x, y, Reynegro[0], Reynegro[1]) && Verificar (x, y, Reynegro[0], Reynegro[1]) && Comer (x, y, Reynegro[0], Reynegro[1]))
-                                                                negro = 1;
-                                        }
-                                }
-                        }
-                        if (negro == blanco){
-                                if (negro == 1)
-                                        return "ambos";
-                                else
-                                        return "no";
-                        }
-                        else if (negro > blanco){
-                                return "negro";
-                        }
-                        else
-                                return "blanco";
-                }
-
-                //metodo JaqueMate
-            public boolean JaqueMate(){
-                        int[][] pieza;
-                        int[] coor = new int[2];
-                        int[] Reyb = new int[2];
-                        int[] Reyn = new int[2];
-                        System.arraycopy(Reyblanco,0,Reyb,0,2);
-                        System.arraycopy(Reynegro,0,Reyn,0,2);
-                        Piezas[][] tablero = new Piezas[8][8];
-                        for (int x=0;x<8;x++){
-                                for (int y=0;y<8;y++){
-                                        tablero[y][x] = matrizPiezas[y][x];
-                                }
-                        }
-                        Piezas temp1, temp2;
-                    for (int x=0;x<8;x++){
-                                for (int y=0;y<8;y++){
-                                        if (matrizPiezas[y][x] != null){
-                                                if (matrizPiezas[y][x].getColor().equals(Jaque(matrizPiezas, Reyblanco, Reynegro))) {
-                                                        pieza = Movimientos(x,y);
-                                                        for(int i=0; i<pieza[50][0]; i++){
-                                                                System.arraycopy(pieza[i],0,coor,0,2);
-                                                                coor = pieza[i];
-                                                                temp1 = tablero[y][x];
-                                                                temp2 = tablero[coor[1]][coor[0]];
-                                                                tablero[y][x] = null;
-                                                                tablero[coor[1]][coor[0]] = temp1;
-                                                                //Guarda las coordenadas de cada rey
-                                                                if (tablero[y][x].getTipo().equals("rey")){
-                                                                        switch (tablero[y][x].getColor()) {
-                                                                                case "blanco":
-                                                                                        Reyb[0] = x;
-                                                                                        Reyb[1] = y;
-                                                                                        break;
-                                                                                case "negro":
-                                                                                        Reyn[0] = x;
-                                                                                        Reyn[1] = y;
-                                                                                        break;
-                                                                        }
-                                                                }
-                                                                if (Jaque(tablero, Reyb, Reyn).equals("no"))
-                                                                        return false;
-                                                                tablero[y][x] = temp1;
-                                                                tablero[coor[1]][coor[0]] = temp2;
-                                                        }
-                            }
-                                        }
-                                }
-                        }
-                    return true;
-            }
-
-
-        //metodo Verificar
-    public boolean Verificar(int x1, int y1, int x2, int y2){
-        if (matrizPiezas[y1][x1].getTipo().equals("peon")){
-            if (matrizPiezas[y2][x2] == null && x1 != x2)
-                return false;
-            if (matrizPiezas[y2][x2] != null && x1 == x2)
-                return false;
-        }
-        else if (!matrizPiezas[y1][x1].getTipo().equals("caballo")){
-            int x = x1;
-            int y = y1;
-            while (y != y2 || x != x2){
-                                if (matrizPiezas[y][x] != agujero)
-                                        if (matrizPiezas[y][x] != null && !(x1 == x && y1 == y))
-                                                        return false;
-                                        if (x < x2)
-                                                x ++;
-                                        if (x > x2)
-                                                x --;
-                                        if (y < y2)
-                                                y ++;
-                                        if (y > y2)
-                                                y --;
-            }
-        }
-                return true;
-    }
-*/
 
 }

@@ -14,10 +14,10 @@ public class ComandoReiniciarJuego implements ComandoAplicacionWeb {
 			HttpServletResponse response) {
 		
 		request.getSession().removeAttribute("ganador");
+		request.getSession().removeAttribute("jaque");
 		Tablero tAjedrez = new Tablero();
 		request.getSession().setAttribute("tablero",tAjedrez);
 		request.getSession().setAttribute("turno", "blanca");
-		
 	}
 
 }
