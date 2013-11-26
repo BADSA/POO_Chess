@@ -45,23 +45,24 @@ public class ExpertoEnAjedrez {
         }
     if (tipo == "torre"){
             if ((x1 == x2) || (y1 == y2)){
-                    if (x1==x2){
-                            return validarMovimientoHorizontal(x1,y1,x2,y2);
-                    }else{
-                            return validarMovimientoVertical(x1,y1,x2,y2);
-                    }
+                if (x1==x2){
+                        return validarMovimientoHorizontal(x1,y1,x2,y2);
+                }else{
+                        return validarMovimientoVertical(x1,y1,x2,y2);
+                }
             }
-        return true;
+        //return true;
     }
-    if (tipo == "alfil")
-            if (Math.abs(x1 - x2) == Math.abs(y1 - y2)){
+    if (tipo == "alfil"){
+    	if (Math.abs(x1 - x2) == Math.abs(y1 - y2)){
             if (x2<x1){//va para arriba 
                     return this.validarDiagonalArriba(x1,y1,x2,y2);
                     
             }else{//va para abajo
                     return this.validarDiagonalAbajo(x1,y1,x2,y2);
             }
-        }
+    	}
+    }
     if (tipo == "reina"){
         if ((x1 == x2 || y1 == y2) || (Math.abs(x1 - x2) == Math.abs(y1 - y2))){
                 if (x1==x2){
@@ -137,34 +138,44 @@ public class ExpertoEnAjedrez {
         }
         
         private boolean validarDiagonalArriba(int x1,int y1,int x2,int y2){
+        		int contador=1;
                 if (y2<y1){//va para la izquierda
                     for(int j=y1;j!=y2;j--){
-                            if (tLogico.getTTipoPieza(x1+((j-y1)-1), j-1)!="vacia"){
+                            if (tLogico.getTTipoPieza(x1-contador, j-1)!="vacia"){
                                     return false;
                             }
+                            contador++;
+                            System.out.println(j);
                     }
             }else{//va para la derecha
                     for(int j=y1;j!=y2;j++){
-                            if (tLogico.getTTipoPieza(x1+((j-y1)-1), j+1)!="vacia"){
+                            if (tLogico.getTTipoPieza(x1-contador, j+1)!="vacia"){
                                     return false;
                             }
+                            contador++;
+                            System.out.println(j);
                     }
             }
                 return true;
         }
         
         private boolean validarDiagonalAbajo(int x1,int y1,int x2,int y2){
+        		int contador=1;
                 if (y2<y1){//va para la izquierda 
                         for(int j=y1;j!=y2;j--){
-                                if (tLogico.getTTipoPieza(x1+((y1-j)+1), j-1)!="vacia"){
+                                if (tLogico.getTTipoPieza(x1+contador, j-1)!="vacia"){
                                         return false;
                                 }
+                                contador++;
+                                System.out.println(j);
                         }
                 }else{//va para la derecha
                         for(int j=y1;j!=y2;j++){
-                                if (tLogico.getTTipoPieza(x1-((j-y1)-1), j+1)!="vacia"){
+                                if (tLogico.getTTipoPieza(x1+contador, j+1)!="vacia"){
                                         return false;
                                 }
+                                contador++;
+                                System.out.println(j);
                         }
                 }
                 return true;
