@@ -12,7 +12,6 @@ public class ExpertoEnAjedrez {
     		boolean isFicha=false;
             String tipo= tLogico.getTTipoPieza(x1, y1);
             String color= tLogico.getTColorPieza(x1, y1);
-        System.out.println(tipo+ " "+color );
         if (tipo == "peon"){
         	isFicha=true;
         	String colorContrario="";
@@ -62,12 +61,10 @@ public class ExpertoEnAjedrez {
     	isFicha=true;
         if ((x1 == x2) || (y1 == y2)){
             if (x1==x2){
-            	System.out.println("aqui toree"+validarMovimientoHorizontal(x1,y1,x2,y2) );
                 if(validarMovimientoHorizontal(x1,y1,x2,y2)==false){
                 	return false;
                 }	
             }else{
-            	System.out.println("aqui toree"+validarMovimientoHorizontal(x1,y1,x2,y2) );
             	if(validarMovimientoVertical(x1,y1,x2,y2)==false){
                 	return false;
                 }
@@ -133,7 +130,6 @@ public class ExpertoEnAjedrez {
     if (tipo == "caballo"){
     	isFicha=true;
         if ((Math.abs(x1 - x2) + Math.abs(y1 - y2) == 3) && (Math.abs(x1-x2) >= 1) && (Math.abs(x1-x2) >= 1)){
-                System.out.println(tLogico.getTColorPieza(x2, y2));
             if (tLogico.getTColorPieza(x2, y2)==color){
                     return false;
             }
@@ -199,7 +195,6 @@ public class ExpertoEnAjedrez {
                 }
             }
         }
-        System.out.println(saltaColor);
         if (saltaColor>1 || (saltaColor>=1 && tLogico.getTTipoPieza(x2, y2)=="vacia")){
         	return false;
         }
@@ -219,7 +214,6 @@ public class ExpertoEnAjedrez {
                     	saltaColor++;
                     }
                     contador++;
-                    System.out.println(j);
             }
         }else{//va para la derecha
         for(int j=y1;j!=y2;j++){
@@ -229,7 +223,6 @@ public class ExpertoEnAjedrez {
                 	saltaColor++;
                 }
                 contador++;
-                System.out.println(j);
             }
         }
         if (saltaColor>1 || (saltaColor>=1 && tLogico.getTTipoPieza(x2, y2)=="vacia")){
@@ -251,7 +244,6 @@ public class ExpertoEnAjedrez {
                             	saltaColor++;
                             }
                             contador++;
-                            System.out.println(j);
                     }
             }else{//va para la derecha
                     for(int j=y1;j!=y2;j++){
@@ -261,7 +253,6 @@ public class ExpertoEnAjedrez {
                             	saltaColor++;
                             }
                             contador++;
-                            System.out.println(j);
                     }
             }
             if (saltaColor>1 || (saltaColor>=1 && tLogico.getTTipoPieza(x2, y2)=="vacia")){
